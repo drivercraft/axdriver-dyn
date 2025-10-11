@@ -14,6 +14,7 @@ extern crate log;
 
 mod blk;
 mod soc;
+mod rknpu;
 
 
 fn iomap(base: u64, size: usize) -> Result<NonNull<u8>, OnProbeError> {
