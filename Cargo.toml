@@ -1,22 +1,27 @@
 [package]
-name = "axdriver-dyn"
-version = "0.1.0"
-edition = "2021"
 authors = ["周睿 <zrufo747@outlook.com>"]
-description = "Dynamic driver loading support for ArceOS"
-license = "GPL-3.0-or-later OR Apache-2.0 OR MulanPSL-2.0"
-homepage = "https://github.com/drivercraft/axdriver-dyn"
-repository = "https://github.com/drivercraft/axdriver-dyn"
-keywords = ["arceos", "cpu", "architecture", "hal"]
 categories = ["embedded", "no-std", "hardware-support", "os"]
+description = "Dynamic driver loading support for ArceOS"
+edition = "2021"
+homepage = "https://github.com/drivercraft/axdriver-dyn"
+keywords = ["arceos", "cpu", "architecture", "hal"]
+license = "GPL-3.0-or-later OR Apache-2.0 OR MulanPSL-2.0"
+name = "axdriver-dyn"
+repository = "https://github.com/drivercraft/axdriver-dyn"
+version = "0.1.0"
 
 [features]
 default = []
 
 [dependencies]
-log = "0.4"
 cfg-if = "1.0"
+log = "0.4"
 memory_addr = "0.4"
-rdrive = "0.18"
 
-axklib = {git = "https://github.com/arceos-hypervisor/arceos", branch ="hypervisor"}
+rdrive = "0.18"
+rdif-clk = "0.4"
+
+axklib = {git = "https://github.com/arceos-hypervisor/arceos", branch = "hypervisor"}
+
+rockchip-pm = {git = "https://github.com/drivercraft/rockchip-pm.git"}
+rk3588-clk = {git = "https://github.com/drivercraft/rk3588-clk"}
