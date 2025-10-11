@@ -52,19 +52,23 @@ fn probe(info: FdtInfo<'_>, plat_dev: PlatformDevice) -> Result<(), OnProbeError
             clk.clock_frequency
         );
 
-        let id = info
-            .phandle_to_device_id(clk.node.phandle().expect("clk no phandle"))
-            .expect("no device id");
+        if clk.name == Some("core") {
+            let id = info
+                .phandle_to_device_id(clk.node.phandle().expect("clk no phandle"))
+                .expect("no device id");
 
-        let clk_dev = rdrive::get::<rdif_clk::Clk>(id).expect("clk not found");
+            let clk_dev = rdrive::get::<rdif_clk::Clk>(id).expect("clk not found");
 
-        let clk_dev = ClkDev {
-            inner: clk_dev,
-            id: 300.into(),
-        };
-        CLK_DEV.call_once(|| clk_dev);
+            let clk_dev = ClkDev {
+                inner: clk_dev,
+                // id: clk.select.into(),
+                // TODO: verify the id
+                id: 300.into()
+            };
+            CLK_DEV.call_once(|| clk_dev);
 
-        emmc::clock::init_global_clk(CLK_DEV.wait());
+            emmc::clock::init_global_clk(CLK_DEV.wait());
+        }
     }
 
     let mut emmc = EMmcHost::new(mmio_base.as_ptr() as usize);
