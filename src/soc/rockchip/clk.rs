@@ -8,7 +8,7 @@ use crate::iomap;
 module_driver!(
     name: "Rockchip CRU",
     level: ProbeLevel::PostKernel,
-    priority: ProbePriority::DEFAULT,
+    priority: ProbePriority::CLK,
     probe_kinds: &[
         ProbeKind::Fdt {
             compatibles: &["rockchip,rk3588-cru"],
@@ -63,12 +63,20 @@ impl rdif_clk::Interface for ClkDrv {
     }
 
     fn get_rate(&self, id: rdif_clk::ClockId) -> Result<u64, rdrive::KError> {
-        // self.inner.
-        Ok(0)
+        let id: usize = id.into();
+        let rate = self
+            .inner
+            .mmc_get_clk(id as _)
+            .map_err(|_| rdrive::KError::InvalidArg { name: "id" })?;
+        Ok(rate as _)
     }
 
     fn set_rate(&mut self, id: rdif_clk::ClockId, rate: u64) -> Result<(), rdrive::KError> {
         // todo!()
+        let id: usize = id.into();
+        self.inner
+            .mmc_set_clk(id as _, rate as _)
+            .map_err(|_| rdrive::KError::InvalidArg { name: "id" })?;
         Ok(())
     }
 }
