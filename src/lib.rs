@@ -13,9 +13,8 @@ extern crate alloc;
 extern crate log;
 
 mod blk;
-mod soc;
 mod rknpu;
-
+mod soc;
 
 fn iomap(base: u64, size: usize) -> Result<NonNull<u8>, OnProbeError> {
     axklib::mem::iomap((base as usize).into(), size)

@@ -1,2 +1,2 @@
-mod pm;
 mod clk;
+mod pm;

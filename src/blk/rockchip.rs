@@ -61,9 +61,9 @@ fn probe(info: FdtInfo<'_>, plat_dev: PlatformDevice) -> Result<(), OnProbeError
 
             let clk_dev = ClkDev {
                 inner: clk_dev,
-                // id: clk.select.into(),
+                id: clk.select.into(),
                 // TODO: verify the id
-                id: 300.into()
+                // id: 300.into(),
             };
             CLK_DEV.call_once(|| clk_dev);
 
